@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-dark: #070707;
+  --color-brand-card: #121212;
+  --color-brand-gold: #c5a059;
+  --color-brand-gold-hover: #d4af37;
+  --color-brand-crimson: #722f37;
+  --color-brand-crimson-hover: #8b0000;
+  --color-brand-cream: #faf7f2;
+  --color-brand-border: #222222;
+  
+  --font-serif: var(--font-cinzel), serif;
+  --font-sans: var(--font-jakarta), sans-serif;
+}
+
+:root {
+  --background: #070707;
+  --foreground: #faf7f2;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #070707;
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c5a059;
+}
+
+/* Glassmorphism helpers */
+.glass {
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 160, 89, 0.15);
+}
+
+.glass-dark {
+  background: rgba(7, 7, 7, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Smooth fade reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
