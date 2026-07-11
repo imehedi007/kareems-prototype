@@ -18,11 +18,11 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Kareem's - Royal Mughal Fine Dining & Ordering",
   description: "Experience the premium taste of traditional Mughlai cuisine with Kareem's elegant online ordering prototype.",
-  metadataBase: new URL("https://kareemsdhaka.com"),
+  metadataBase: new URL("https://kareems-dhaka.vercel.app"),
   openGraph: {
     title: "Kareem's - Royal Mughal Fine Dining & Ordering",
     description: "Experience the premium taste of traditional Mughlai cuisine with Kareem's elegant online ordering prototype.",
-    url: "https://kareemsdhaka.com",
+    url: "https://kareems-dhaka.vercel.app",
     siteName: "Kareem's Dhaka",
     locale: "en_US",
     type: "website",

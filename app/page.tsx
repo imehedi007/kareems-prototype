@@ -27,12 +27,24 @@ export default function Home() {
   // Refs and states for Poster Gallery
   const gallerySectionRef = useRef<HTMLDivElement | null>(null);
   const galleryTrackRef = useRef<HTMLDivElement | null>(null);
+  const galleryViewportRef = useRef<HTMLDivElement | null>(null);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [manualOffset, setManualOffset] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileScrollProgress, setMobileScrollProgress] = useState(0);
 
   const isDragging = useRef(false);
   const startX = useRef(0);
   const startManualOffset = useRef(0);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const clampOffset = (offset: number) => {
     if (!galleryTrackRef.current) return offset;
@@ -44,15 +56,32 @@ export default function Home() {
   };
 
   const handlePrev = () => {
+    if (isMobile && galleryViewportRef.current) {
+      galleryViewportRef.current.scrollBy({ left: -312, behavior: "smooth" });
+      return;
+    }
     const currentCombined = scrollOffset + manualOffset;
     const targetCombined = clampOffset(currentCombined + 312);
     setManualOffset(targetCombined - scrollOffset);
   };
 
   const handleNext = () => {
+    if (isMobile && galleryViewportRef.current) {
+      galleryViewportRef.current.scrollBy({ left: 312, behavior: "smooth" });
+      return;
+    }
     const currentCombined = scrollOffset + manualOffset;
     const targetCombined = clampOffset(currentCombined - 312);
     setManualOffset(targetCombined - scrollOffset);
+  };
+
+  const handleMobileScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (!isMobile) return;
+    const target = e.currentTarget;
+    const maxScroll = target.scrollWidth - target.clientWidth;
+    if (maxScroll > 0) {
+      setMobileScrollProgress(target.scrollLeft / maxScroll);
+    }
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -101,6 +130,7 @@ export default function Home() {
   // Poster gallery scroll slide effect
   useEffect(() => {
     const handleScroll = () => {
+      if (isMobile) return;
       if (!gallerySectionRef.current || !galleryTrackRef.current) return;
 
       const section = gallerySectionRef.current;
@@ -453,11 +483,13 @@ export default function Home() {
 
         {/* Horizontal Slider Viewport */}
         <div 
-          className="w-full overflow-hidden select-none py-4 relative group/viewport cursor-grab active:cursor-grabbing"
+          ref={galleryViewportRef}
+          className="w-full overflow-x-auto lg:overflow-hidden select-none py-4 relative group/viewport cursor-grab active:cursor-grabbing scrollbar-none snap-x snap-mandatory scroll-smooth"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
+          onScroll={handleMobileScroll}
         >
           {/* Navigation Arrows */}
           <button
@@ -487,14 +519,14 @@ export default function Home() {
             ref={galleryTrackRef}
             className="flex space-x-8 px-8 transition-transform duration-300 ease-out"
             style={{
-              transform: `translateX(${scrollOffset + manualOffset}px)`,
+              transform: isMobile ? "none" : `translateX(${scrollOffset + manualOffset}px)`,
               width: "max-content",
             }}
           >
             {posters.map((p, idx) => (
               <div
                 key={idx}
-                className="relative rounded-3xl p-4 flex-shrink-0 shadow-2xl transition-all duration-300 hover:scale-[1.03] border border-white/5"
+                className="relative rounded-3xl p-4 flex-shrink-0 shadow-2xl transition-all duration-300 hover:scale-[1.03] border border-white/5 snap-center"
                 style={{
                   background: p.bgFrame,
                   width: "280px",
@@ -521,9 +553,11 @@ export default function Home() {
           {posters.map((_, idx) => {
             const currentCombined = scrollOffset + manualOffset;
             const maxShiftVal = galleryTrackRef.current ? galleryTrackRef.current.scrollWidth - window.innerWidth + 64 : 1;
-            const calculatedActiveDot = maxShiftVal > 0 
-              ? Math.max(0, Math.min(6, Math.round((Math.abs(currentCombined) / maxShiftVal) * 6)))
-              : 0;
+            const calculatedActiveDot = isMobile 
+              ? Math.round(mobileScrollProgress * (posters.length - 1))
+              : (maxShiftVal > 0 
+                  ? Math.max(0, Math.min(posters.length - 1, Math.round((Math.abs(currentCombined) / maxShiftVal) * (posters.length - 1))))
+                  : 0);
 
             return (
               <div
