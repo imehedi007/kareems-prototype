@@ -3,7 +3,7 @@ export interface MenuItem {
   name: string;
   description: string;
   price: number;
-  category: 'kebab' | 'biryani' | 'curry' | 'dessert';
+  category: 'kebab' | 'biryani' | 'curry' | 'dessert' | 'lunch';
   image: string;
   tags: string[];
   spiceLevel: number; // 0 to 3
@@ -286,5 +286,46 @@ export const menuItems: MenuItem[] = [
     image: "/images/dessert.webp",
     tags: ["Vegetarian", "Sweet"],
     spiceLevel: 0
+  },
+  // Lunch Sets
+  {
+    id: "lunch_001",
+    name: "Vuna Khichuri Set",
+    description: "Yellow lentil-infused basmati rice served with a boiled egg, spiced chicken curry, and fresh garden salad.",
+    price: 300,
+    category: "lunch",
+    image: "/images/banner_009.webp",
+    tags: ["Halal", "Lunch Special"],
+    spiceLevel: 2
+  },
+  {
+    id: "lunch_002",
+    name: "Mutton Tehari Set",
+    description: "Traditional mustard oil tehari rice layered with spiced mutton chunks, egg, and fresh salad.",
+    price: 350,
+    category: "lunch",
+    image: "/images/banner_009.webp",
+    tags: ["Halal", "Lunch Special", "Best Seller"],
+    spiceLevel: 2
+  },
+  {
+    id: "lunch_003",
+    name: "Mutton Biryani Set",
+    description: "Fragrant basmati rice mutton biryani served with a boiled egg, traditional roasted potato, and fresh salad.",
+    price: 400,
+    category: "lunch",
+    image: "/images/banner_009.webp",
+    tags: ["Halal", "Lunch Special", "Royal Set"],
+    spiceLevel: 2
+  },
+  {
+    id: "lunch_004",
+    name: "Special Lunch Box",
+    description: "Royal lunch selection featuring plain basmati rice, tandoori tikka kebab, rich butter curry, thick daal, and salad.",
+    price: 500,
+    category: "lunch",
+    image: "/images/banner_009.webp",
+    tags: ["Halal", "Lunch Special", "Chef Choice"],
+    spiceLevel: 1
   }
 ];

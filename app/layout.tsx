@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cinzel, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { FloatingWidget } from "@/components/FloatingWidget";
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
@@ -35,12 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased dark">
+    <html lang="en" className="h-full antialiased light">
       <body
         className={`${cinzel.variable} ${plusJakarta.variable} min-h-full flex flex-col bg-brand-dark text-brand-cream font-sans selection:bg-brand-gold selection:text-brand-dark`}
       >
         <CartProvider>
           {children}
+          <FloatingWidget />
         </CartProvider>
       </body>
     </html>

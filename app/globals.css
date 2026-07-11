@@ -15,14 +15,75 @@
 }
 
 :root {
+  --color-brand-dark: #070707;
+  --color-brand-card: #121212;
+  --color-brand-gold: #c5a059;
+  --color-brand-gold-hover: #d4af37;
+  --color-brand-crimson: #722f37;
+  --color-brand-crimson-hover: #8b0000;
+  --color-brand-cream: #faf7f2;
+  --color-brand-border: #222222;
+
   --background: #070707;
   --foreground: #faf7f2;
+}
+
+:root.light {
+  --color-brand-dark: #F3ECE0; /* warm premium royal sand (no harsh whites) */
+  --color-brand-card: #FAF6ED; /* soft warm ivory cards */
+  --color-brand-gold: #8A6421; /* deep gold for maximum readability */
+  --color-brand-gold-hover: #6D4F17;
+  --color-brand-cream: #1A150E; /* warm dark bronze-charcoal text */
+  --color-brand-border: #D8CEBB; /* soft warm sand borders */
+
+  --background: #F3ECE0;
+  --foreground: #1A150E;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+:root.light .glass {
+  background: rgba(250, 246, 237, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(138, 100, 33, 0.22) !important;
+  box-shadow: 
+    0 10px 30px -5px rgba(26, 21, 14, 0.05), 
+    0 4px 12px -3px rgba(138, 100, 33, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+:root.light .bg-brand-card {
+  background-color: #FAF6ED !important;
+  border-color: rgba(138, 100, 33, 0.22) !important;
+  box-shadow: 
+    0 10px 30px -5px rgba(26, 21, 14, 0.05), 
+    0 4px 12px -3px rgba(138, 100, 33, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+:root.light input,
+:root.light textarea,
+:root.light select {
+  background-color: #FAF6ED !important;
+  border-color: rgba(138, 100, 33, 0.25) !important;
+  color: #1A150E !important;
+  box-shadow: inset 0 2px 4px rgba(26, 21, 14, 0.03) !important;
+}
+
+:root.light ::-webkit-scrollbar-track {
+  background: #F3ECE0;
+}
+:root.light ::-webkit-scrollbar-thumb {
+  background: #D8CEBB;
+}
+:root.light ::-webkit-scrollbar-thumb:hover {
+  background: #8A6421;
 }
 
 /* Custom Scrollbar */
@@ -65,4 +126,13 @@ body {
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Force light text on solid brand-crimson backgrounds in light mode */
+.light .bg-brand-crimson,
+.light .bg-brand-crimson *,
+.light .bg-brand-crimson svg,
+.light .bg-brand-crimson svg * {
+  color: #faf7f2 !important;
+  stroke: #faf7f2 !important;
 }

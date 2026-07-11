@@ -106,10 +106,10 @@ export default function Home() {
     { src: "/images/banner_001.webp", bgFrame: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)" },
     { src: "/images/banner_003.webp", bgFrame: "linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)" },
     { src: "/images/banner_004.webp", bgFrame: "linear-gradient(135deg, #fddb92 0%, #d1f9ff 100%)" },
+    { src: "/images/banner_009.webp", bgFrame: "linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)" },
     { src: "/images/banner_005.webp", bgFrame: "linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)" },
     { src: "/images/banner_007.webp", bgFrame: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)" },
     { src: "/images/banner_008.webp", bgFrame: "linear-gradient(135deg, #fddb92 0%, #d1f9ff 100%)" },
-    { src: "/images/banner_009.webp", bgFrame: "linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)" },
   ];
 
   // Countdown timer effect
@@ -237,7 +237,7 @@ export default function Home() {
             src="/images/banner_002.webp"
             alt="Kareem's interior"
             fill
-            className="object-cover opacity-35"
+            className="object-cover opacity-60"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent" />
@@ -308,15 +308,15 @@ export default function Home() {
                   src={cat.img}
                   alt={cat.name}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-60"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <h3 className="font-serif text-lg font-bold text-brand-cream group-hover:text-brand-gold transition-colors">
+                  <h3 className="font-serif text-lg font-bold text-white group-hover:text-brand-gold transition-colors">
                     {cat.name}
                   </h3>
-                  <p className="text-[10px] text-brand-cream/60 mt-1 uppercase tracking-wide">
+                  <p className="text-[10px] text-white/70 mt-1 uppercase tracking-wide">
                     {cat.desc}
                   </p>
                 </div>
@@ -482,7 +482,7 @@ export default function Home() {
         </div>
 
         {/* Horizontal Slider Viewport */}
-        <div 
+        <div
           ref={galleryViewportRef}
           className="w-full overflow-x-auto lg:overflow-hidden select-none py-4 relative group/viewport cursor-grab active:cursor-grabbing scrollbar-none snap-x snap-mandatory scroll-smooth"
           onMouseDown={handleMouseDown}
@@ -523,28 +523,32 @@ export default function Home() {
               width: "max-content",
             }}
           >
-            {posters.map((p, idx) => (
-              <div
-                key={idx}
-                className="relative rounded-3xl p-4 flex-shrink-0 shadow-2xl transition-all duration-300 hover:scale-[1.03] border border-white/5 snap-center"
-                style={{
-                  background: p.bgFrame,
-                  width: "280px",
-                  height: "400px",
-                }}
-              >
-                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-inner border border-black/10">
-                  <Image
-                    src={p.src}
-                    alt={`Poster ${idx + 1}`}
-                    fill
-                    className="object-fill"
-                    sizes="280px"
-                    draggable={false}
-                  />
-                </div>
-              </div>
-            ))}
+            {posters.map((p, idx) => {
+              const isLunchBox = p.src.includes("banner_009");
+              return (
+                <Link
+                  key={idx}
+                  href={isLunchBox ? "/lunch-box" : "/menu"}
+                  className="relative rounded-3xl p-4 flex-shrink-0 shadow-2xl transition-all duration-300 hover:scale-[1.03] border border-white/5 snap-center block cursor-pointer"
+                  style={{
+                    background: p.bgFrame,
+                    width: "280px",
+                    height: "400px",
+                  }}
+                >
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-inner border border-black/10">
+                    <Image
+                      src={p.src}
+                      alt={`Poster ${idx + 1}`}
+                      fill
+                      className="object-fill"
+                      sizes="280px"
+                      draggable={false}
+                    />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
@@ -553,18 +557,17 @@ export default function Home() {
           {posters.map((_, idx) => {
             const currentCombined = scrollOffset + manualOffset;
             const maxShiftVal = galleryTrackRef.current ? galleryTrackRef.current.scrollWidth - window.innerWidth + 64 : 1;
-            const calculatedActiveDot = isMobile 
+            const calculatedActiveDot = isMobile
               ? Math.round(mobileScrollProgress * (posters.length - 1))
-              : (maxShiftVal > 0 
-                  ? Math.max(0, Math.min(posters.length - 1, Math.round((Math.abs(currentCombined) / maxShiftVal) * (posters.length - 1))))
-                  : 0);
+              : (maxShiftVal > 0
+                ? Math.max(0, Math.min(posters.length - 1, Math.round((Math.abs(currentCombined) / maxShiftVal) * (posters.length - 1))))
+                : 0);
 
             return (
               <div
                 key={idx}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  calculatedActiveDot === idx ? "bg-brand-gold w-6" : "bg-brand-cream/20"
-                }`}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${calculatedActiveDot === idx ? "bg-brand-gold w-6" : "bg-brand-cream/20"
+                  }`}
               />
             );
           })}

@@ -64,6 +64,18 @@ export default function CheckoutPage() {
     }
   }, [isOrderPlaced]);
 
+  // Force scroll to top on page mount and when order is placed
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
+  useEffect(() => {
+    if (isOrderPlaced) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [isOrderPlaced]);
+
+
   const handleApplyPromo = (e: React.FormEvent) => {
     e.preventDefault();
     setPromoError(false);

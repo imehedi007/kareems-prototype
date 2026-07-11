@@ -73,6 +73,7 @@ export const Navbar = () => {
             >
               Menu
             </Link>
+
             <Link
               href="/contact"
               className={`font-serif text-sm tracking-widest uppercase transition-colors hover:text-brand-gold ${
@@ -85,6 +86,25 @@ export const Navbar = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-4">
+            {/* Lunch Box CTA Button */}
+            <Link
+              href="/lunch-box"
+              className={`hidden sm:inline-flex items-center px-4 py-1.5 border border-brand-gold/30 hover:scale-[1.05] text-[10px] sm:text-xs font-serif font-bold tracking-widest uppercase rounded-full transition-all duration-300 shadow-md hover:shadow-brand-gold/30 cursor-pointer relative ${
+                isActive("/lunch-box")
+                  ? "bg-brand-gold text-brand-dark"
+                  : "bg-brand-gold text-brand-dark hover:bg-brand-gold-hover"
+              }`}
+            >
+              <span className="relative flex h-2 w-2 mr-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-dark/60 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-dark"></span>
+              </span>
+              <span>Order Lunch Box</span>
+              <span className="absolute -top-1.5 -right-2 px-1.5 py-0.5 bg-brand-crimson text-[7.5px] text-white font-sans font-black tracking-normal rounded-full uppercase shadow-md leading-none border border-brand-gold/15">
+                New
+              </span>
+            </Link>
+
             {/* Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
@@ -135,6 +155,15 @@ export const Navbar = () => {
             }`}
           >
             Menu
+          </Link>
+          <Link
+            href="/lunch-box"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`font-serif text-xl tracking-widest uppercase ${
+              isActive("/lunch-box") ? "text-brand-gold" : "text-brand-cream/80"
+            }`}
+          >
+            Lunch Box
           </Link>
           <Link
             href="/contact"
