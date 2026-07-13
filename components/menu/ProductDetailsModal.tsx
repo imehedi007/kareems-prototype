@@ -81,7 +81,7 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({ item, 
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -97,7 +97,7 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({ item, 
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ type: "spring", duration: 0.5 }}
-      className="relative w-full max-w-4xl bg-brand-card border border-brand-gold/15 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl z-50 max-h-[95vh] md:max-h-[85vh]"
+      className="relative w-full max-w-4xl bg-brand-card border border-brand-gold/15 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl z-[100] max-h-[95vh] md:max-h-[85vh]"
     >
       {/* Close button */}
       <button
